@@ -1,24 +1,38 @@
 # =====================================================
-# HR Skill Hub - 内容更新脚本
-# 用途：改完 skills.json 或页面后，一键推送上线
+# HR Skill Hub - Daily Update Script
+# Usage: Double-click this file after editing files
 # =====================================================
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $ScriptDir
 
-$msg = Read-Host "📝 本次更新说明（直接回车用默认: 内容更新）"
-if ([string]::IsNullOrWhiteSpace($msg)) { $msg = "chore: 内容更新" }
+Write-Host ""
+Write-Host "[Skill Hub] Update & Push" -ForegroundColor Cyan
+Write-Host "===========================" -ForegroundColor Cyan
 
 git add .
 $status = git status --porcelain
 if (-not $status) {
-    Write-Host "✅ 工作区干净，无更新可推送" -ForegroundColor Green
+    Write-Host "[OK] Working tree clean. Nothing to push." -ForegroundColor Green
+    Read-Host "Press Enter to exit"
     exit 0
 }
 
-git commit -m "$msg"
-git push origin main
+Write-Host ""
+Write-Host "[Changes detected]" -ForegroundColor Yellow
+git status --short
 
-Write-Host "`n🎉 已推送到 GitHub，1-2 分钟后线上更新" -ForegroundColor Green
-Write-Host "🌐 https://ttttyu019.github.io/hr-skill-hub/skill-hub.html" -ForegroundColor Cyan
+$msg = Read-Host "`nCommit message (Enter for default)"
+if (-not $msg) {
+    $msg = "chore: content update " + (Get-Date -Format "yyyy-MM-dd HH:mm")
+}
+
+git commit -m "$msg"
+git push
+
+Write-Host ""
+Write-Host "[Done] Pushed to GitHub. Pages will rebuild in ~1 min." -ForegroundColor Green
+Write-Host "URL: https://ttttyu019.github.io/hr-skill-hub/skill-hub.html" -ForegroundColor Cyan
+Write-Host ""
+Read-Host "Press Enter to exit"
