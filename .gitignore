@@ -1,0 +1,16 @@
+# macOS / Windows
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local
+*.local
+.env
+.env.*
+node_modules/

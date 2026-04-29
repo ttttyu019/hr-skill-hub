@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HR Skill Hub · 萨罗斯 HR · AI 能力索引 v1.1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"PingFang SC"', '"Microsoft YaHei"', 'system-ui', 'sans-serif'] },
+        colors: {
+          brand: {
+            50: '#f0f7ff', 100: '#e0eefe', 500: '#4f7cff', 600: '#3b5fd9', 700: '#2d4ab3'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); }
+  .card-hover { transition: all .2s ease; }
+  .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px rgba(79, 124, 255, .25); }
+  .scroll-shadow::-webkit-scrollbar { width: 6px; }
+  .scroll-shadow::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+  .tag-chip { padding: 2px 8px; border-radius: 999px; font-size: 11px; background: #eef2ff; color: #4338ca; }
+  .modal-bg { background: rgba(15, 23, 42, .55); backdrop-filter: blur(4px); }
+  .copy-btn { transition: all .15s ease; }
+  .copy-btn:active { transform: scale(.97); }
+  .filter-pill { transition: all .15s ease; cursor: pointer; user-select: none; }
+  .empty-illust { font-size: 64px; opacity: .35; }
+
+  /* 状态徽章配色 */
+  .status-stable { background: #d1fae5; color: #065f46; }
+  .status-draft  { background: #fef3c7; color: #92400e; }
+  .status-wip    { background: #dbeafe; color: #1e40af; }
+  .status-idea   { background: #fce7f3; color: #9d174d; }
+
+  /* 分类配色（卡片左侧条） */
+  .cat-skill-tools  { border-left-color: #4f7cff; }
+  .cat-ai-howto     { border-left-color: #6366f1; }
+  .cat-toolchain    { border-left-color: #64748b; }
+  .cat-playbook     { border-left-color: #10b981; }
+  .cat-faq          { border-left-color: #f59e0b; }
+  .cat-inspiration  { border-left-color: #f43f5e; }
+</style>
+</head>
+<body class="font-sans text-slate-800">
+
+<!-- ============ 顶部 Hero ============ -->
+<header class="bg-gradient-to-br from-brand-600 via-brand-500 to-indigo-500 text-white">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex items-start justify-between flex-wrap gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-3xl">🤖</span>
+          <h1 class="text-3xl font-bold">HR Skill Hub</h1>
+          <span class="badge bg-white/20 text-white border border-white/30">v1.1</span>
+        </div>
+        <p class="text-white/90 text-sm">萨罗斯 HR · AI 能力 / 工具链 / 场景方案 一站式索引</p>
+        <p class="text-white/70 text-xs mt-1">更新于 <span id="lastUpdate">--</span></p>
+      </div>
+      <div class="flex gap-2 text-xs">
+        <a href="#guide" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 transition">📖 使用指南</a>
+        <a href="https://github.com/ttttyu019" target="_blank" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 transition">🔗 GitHub</a>
+      </div>
+    </div>
+
+    <!-- 数据 KPI -->
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mt-8">
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-total">0</div>
+        <div class="text-xs text-white/80">总条目</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-skill-tools">0</div>
+        <div class="text-xs text-white/80">📦 Skill 工具</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-ai-howto">0</div>
+        <div class="text-xs text-white/80">📘 操作指北</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-playbook">0</div>
+        <div class="text-xs text-white/80">🎯 实战方案</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-faq">0</div>
+        <div class="text-xs text-white/80">⚠️ 避坑 FAQ</div>
+      </div>
+      <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+        <div class="text-2xl font-bold" id="kpi-inspiration">0</div>
+        <div class="text-xs text-white/80">💡 灵感储备</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 主体 ============ -->
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+  <!-- 搜索 + 筛选栏 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-6">
+    <div class="flex flex-col md:flex-row gap-4">
+      <!-- 搜索框 -->
+      <div class="flex-1 relative">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        <input id="searchInput" type="text" placeholder="搜索 skill 名称、场景、标签... 例：访谈、文化、离职"
+               class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm" />
+      </div>
+      <!-- 状态筛选 -->
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-slate-500">状态：</span>
+        <button class="status-filter filter-pill px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200" data-status="all">全部</button>
+        <button class="status-filter filter-pill px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100" data-status="stable">已稳定</button>
+        <button class="status-filter filter-pill px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100" data-status="wip">建设中</button>
+        <button class="status-filter filter-pill px-3 py-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100" data-status="idea">想法池</button>
+      </div>
+    </div>
+
+    <!-- 分类 Pills -->
+    <div class="flex flex-wrap gap-2 mt-4" id="categoryPills">
+      <!-- 由 JS 渲染 -->
+    </div>
+  </div>
+
+  <!-- 🔥 个人热门排行（基于浏览器本地统计） -->
+  <div id="trendingBox" class="hidden bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 mb-6">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <div class="font-semibold text-amber-900 flex items-center gap-2">🔥 我最常用的 Skill
+          <span class="badge bg-amber-200/60 text-amber-800 text-[10px]">本地记忆</span>
+        </div>
+        <p class="text-xs text-amber-700 mt-0.5">基于你在本浏览器里点击「📋 复制」的次数 · 数据仅存在你本地</p>
+      </div>
+      <button onclick="clearStats()" class="text-xs text-amber-700 hover:text-amber-900 underline">清空记录</button>
+    </div>
+    <div id="trendingList" class="flex flex-wrap gap-2"></div>
+  </div>
+
+  <!-- 🚧 团队记忆 Roadmap 提示 -->
+  <div id="teamMemoryHint" class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 mb-6 text-xs text-indigo-800 flex items-center gap-2">
+    <span class="text-base">🚧</span>
+    <span><strong>团队级使用统计</strong>（哪些 skill 全团队最爱用、谁贡献最多）正在 Roadmap 上 · Phase 2 接入 GitHub Issues / Vercel KV 后端</span>
+  </div>
+
+  <!-- 结果统计 -->
+  <div class="flex items-center justify-between mb-4 text-sm text-slate-500">
+    <div>共 <span id="resultCount" class="font-semibold text-brand-600">0</span> 条结果</div>
+    <div class="flex gap-2 text-xs">
+      <button id="sortByName" class="px-2 py-1 rounded hover:bg-slate-100">按名称</button>
+      <button id="sortByStatus" class="px-2 py-1 rounded hover:bg-slate-100 text-brand-600 font-medium">按状态</button>
+    </div>
+  </div>
+
+  <!-- 卡片网格 -->
+  <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- 由 JS 渲染 -->
+  </div>
+
+  <!-- 空状态 -->
+  <div id="emptyState" class="hidden text-center py-16">
+    <div class="empty-illust">🔍</div>
+    <p class="text-slate-500 mt-2">没有匹配的内容，换个关键词试试？</p>
+  </div>
+
+  <!-- ============ 使用指南 ============ -->
+  <section id="guide" class="mt-12 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">📖 怎么用这个 Hub</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div class="bg-slate-50 rounded-xl p-4">
+        <div class="font-semibold mb-2">1️⃣ 找到合适的 Skill</div>
+        <p class="text-slate-600">用顶部搜索框输入业务场景关键词（如 "离职"、"访谈"），或按分类 / 状态筛选。点开卡片看详情。</p>
+      </div>
+      <div class="bg-slate-50 rounded-xl p-4">
+        <div class="font-semibold mb-2">2️⃣ 复制安装命令</div>
+        <p class="text-slate-600">在卡片详情里，点 <span class="font-mono text-brand-600">📋 复制</span> 拿到 <code class="bg-white px-1 rounded">use_skill</code> 命令，粘到 Claude Code / Cursor 对话即可加载。</p>
+      </div>
+      <div class="bg-slate-50 rounded-xl p-4">
+        <div class="font-semibold mb-2">3️⃣ 反馈 / 贡献</div>
+        <p class="text-slate-600">用过觉得好用，或者有新场景想加进来，找章老师 Push 一版。Hub 数据全在 <code class="bg-white px-1 rounded">data/skills.json</code>。</p>
+      </div>
+    </div>
+
+    <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm">
+      <div class="font-semibold text-amber-800 mb-1">⚠️ 隐私与合规提醒</div>
+      <p class="text-amber-700">所有 HR 敏感数据（员工姓名、薪资、绩效）请在本地脱敏后再喂给 AI；对外分享 Hub 链接前，确认所选 skill 不包含内部敏感信息。</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="mt-10 py-6 text-center text-xs text-slate-400">
+    HR Skill Hub · Made with ❤️ by 章老师 · 持续生长中
+  </footer>
+</main>
+
+<!-- ============ 详情弹窗 ============ -->
+<div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-bg">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto scroll-shadow">
+    <div class="p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-2 flex-wrap">
+            <span id="modalCatBadge" class="badge"></span>
+            <span id="modalStatusBadge" class="badge"></span>
+            <span id="modalVersionBadge" class="badge bg-slate-100 text-slate-700"></span>
+          </div>
+          <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+          <p id="modalOwner" class="text-xs text-slate-500 mt-1 hidden"></p>
+        </div>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-2xl leading-none ml-2">×</button>
+      </div>
+
+      <p id="modalSummary" class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-xl"></p>
+
+      <div id="modalScenariosBox" class="mt-4 hidden">
+        <div class="text-xs font-semibold text-slate-500 mb-2">🎯 适用场景</div>
+        <div id="modalScenarios" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <div id="modalHighlightsBox" class="mt-4 hidden">
+        <div class="text-xs font-semibold text-slate-500 mb-2">✨ 亮点</div>
+        <ul id="modalHighlights" class="text-sm text-slate-700 space-y-1 list-disc list-inside"></ul>
+      </div>
+
+      <div id="modalInstallBox" class="mt-4 hidden">
+        <div class="text-xs font-semibold text-slate-500 mb-2">📦 安装 / 触发</div>
+        <div class="bg-slate-900 text-slate-100 rounded-xl p-3 font-mono text-xs flex items-center justify-between">
+          <code id="modalInstallCmd" class="flex-1 truncate"></code>
+          <button onclick="copyInstall()" class="copy-btn ml-3 px-3 py-1 bg-brand-500 hover:bg-brand-600 rounded text-white text-xs">📋 复制</button>
+        </div>
+        <div id="modalTriggerBox" class="mt-2 text-xs text-slate-600 hidden">
+          <span class="font-semibold">触发关键词：</span><span id="modalTrigger"></span>
+        </div>
+      </div>
+
+      <div id="modalTagsBox" class="mt-4 hidden">
+        <div class="text-xs font-semibold text-slate-500 mb-2">🏷 标签</div>
+        <div id="modalTags" class="flex flex-wrap gap-1.5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 复制成功 toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg text-sm shadow-xl opacity-0 pointer-events-none transition-opacity z-50">
+  ✅ 已复制到剪贴板
+</div>
+
+<!-- ============ 数据 & 逻辑 ============ -->
+<script>
+let allSkills = [];
+let categories = [];
+let currentCategory = 'all';
+let currentStatus = 'all';
+let currentSort = 'status';
+let currentKeyword = '';
+
+// 状态标签
+const STATUS_LABEL = { stable: '已稳定', wip: '建设中', draft: '草稿', idea: '想法' };
+const STATUS_ORDER = { stable: 1, wip: 2, draft: 3, idea: 4 };
+
+// 加载数据
+async function loadData() {
+  try {
+    const resp = await fetch('./data/skills.json');
+    const data = await resp.json();
+    allSkills = data.skills || [];
+    categories = data.categories || [];
+    document.getElementById('lastUpdate').textContent = data.meta?.updatedAt || '--';
+    renderCategoryPills();
+    renderKPIs();
+    render();
+    renderTrending();
+  } catch (e) {
+    document.getElementById('cardsGrid').innerHTML =
+      `<div class="col-span-full text-center text-rose-500 py-10">数据加载失败：${e.message}<br/><span class="text-xs text-slate-500">请确认 data/skills.json 存在，或通过 HTTP 服务器打开（不要直接双击 html）</span></div>`;
+  }
+}
+
+// 渲染分类筛选 Pills
+function renderCategoryPills() {
+  const wrap = document.getElementById('categoryPills');
+  const all = `<button class="cat-pill filter-pill px-3 py-1.5 rounded-lg text-xs bg-brand-500 text-white" data-cat="all">全部</button>`;
+  const items = categories.map(c => `
+    <button class="cat-pill filter-pill px-3 py-1.5 rounded-lg text-xs bg-slate-100 hover:bg-slate-200 text-slate-700" data-cat="${c.id}">
+      ${c.icon} ${c.name}
+    </button>
+  `).join('');
+  wrap.innerHTML = all + items;
+  wrap.querySelectorAll('.cat-pill').forEach(b => {
+    b.onclick = () => {
+      currentCategory = b.dataset.cat;
+      wrap.querySelectorAll('.cat-pill').forEach(x => {
+        x.classList.remove('bg-brand-500', 'text-white');
+        x.classList.add('bg-slate-100', 'hover:bg-slate-200', 'text-slate-700');
+      });
+      b.classList.add('bg-brand-500', 'text-white');
+      b.classList.remove('bg-slate-100', 'hover:bg-slate-200', 'text-slate-700');
+      render();
+    };
+  });
+}
+
+// 渲染 KPI
+function renderKPIs() {
+  document.getElementById('kpi-total').textContent = allSkills.length;
+  ['skill-tools','ai-howto','playbook','faq','inspiration'].forEach(cat => {
+    const n = allSkills.filter(s => s.category === cat).length;
+    const el = document.getElementById('kpi-' + cat);
+    if (el) el.textContent = n;
+  });
+}
+
+// 主渲染
+function render() {
+  let list = allSkills.slice();
+
+  // 关键词过滤
+  if (currentKeyword) {
+    const kw = currentKeyword.toLowerCase();
+    list = list.filter(s => {
+      const blob = [s.name, s.summary, ...(s.tags||[]), ...(s.scenarios||[]), s.trigger||''].join(' ').toLowerCase();
+      return blob.includes(kw);
+    });
+  }
+  // 分类过滤
+  if (currentCategory !== 'all') list = list.filter(s => s.category === currentCategory);
+  // 状态过滤
+  if (currentStatus !== 'all') list = list.filter(s => s.status === currentStatus);
+
+  // 排序
+  if (currentSort === 'name') {
+    list.sort((a, b) => (a.name||'').localeCompare(b.name||'', 'zh'));
+  } else {
+    list.sort((a, b) => (STATUS_ORDER[a.status]||9) - (STATUS_ORDER[b.status]||9));
+  }
+
+  document.getElementById('resultCount').textContent = list.length;
+  const grid = document.getElementById('cardsGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  grid.innerHTML = list.map(s => {
+    const cat = categories.find(c => c.id === s.category) || {};
+    const tags = (s.tags||[]).slice(0, 4).map(t => `<span class="tag-chip">${t}</span>`).join('');
+    const moreTag = (s.tags||[]).length > 4 ? `<span class="text-xs text-slate-400">+${s.tags.length - 4}</span>` : '';
+    return `
+      <div class="card-hover bg-white rounded-2xl border border-slate-200 border-l-4 cat-${s.category} p-5 cursor-pointer" onclick="openModal('${s.id}')">
+        <div class="flex items-start justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">${cat.icon || '📌'}</span>
+            <span class="text-xs text-slate-500">${cat.name || ''}</span>
+          </div>
+          <span class="badge status-${s.status}">${STATUS_LABEL[s.status] || s.status}</span>
+        </div>
+        <h3 class="font-bold text-base mb-1.5 leading-tight">${s.name}</h3>
+        <p class="text-xs text-slate-600 line-clamp-3 mb-3 leading-relaxed">${s.summary || ''}</p>
+        <div class="flex flex-wrap items-center gap-1.5">${tags}${moreTag}</div>
+        <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <span>${s.owner || ''}</span>
+          ${s.version ? `<span class="font-mono">${s.version}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 弹窗
+function openModal(id) {
+  const s = allSkills.find(x => x.id === id);
+  if (!s) return;
+  currentModalId = id;
+  const cat = categories.find(c => c.id === s.category) || {};
+
+  document.getElementById('modalTitle').textContent = s.name;
+  document.getElementById('modalCatBadge').textContent = `${cat.icon||''} ${cat.name||''}`;
+  document.getElementById('modalCatBadge').className = 'badge bg-slate-100 text-slate-700';
+  document.getElementById('modalStatusBadge').textContent = STATUS_LABEL[s.status] || s.status;
+  document.getElementById('modalStatusBadge').className = `badge status-${s.status}`;
+  document.getElementById('modalVersionBadge').textContent = s.version || '';
+  document.getElementById('modalVersionBadge').style.display = s.version ? '' : 'none';
+  document.getElementById('modalOwner').textContent = '';
+  document.getElementById('modalSummary').textContent = s.summary || '';
+
+  // 场景
+  const scBox = document.getElementById('modalScenariosBox');
+  if (s.scenarios?.length) {
+    document.getElementById('modalScenarios').innerHTML =
+      s.scenarios.map(x => `<span class="badge bg-emerald-50 text-emerald-700">${x}</span>`).join('');
+    scBox.classList.remove('hidden');
+  } else scBox.classList.add('hidden');
+
+  // 亮点
+  const hlBox = document.getElementById('modalHighlightsBox');
+  if (s.highlights?.length) {
+    document.getElementById('modalHighlights').innerHTML =
+      s.highlights.map(x => `<li>${x}</li>`).join('');
+    hlBox.classList.remove('hidden');
+  } else hlBox.classList.add('hidden');
+
+  // 安装
+  const installBox = document.getElementById('modalInstallBox');
+  if (s.install) {
+    document.getElementById('modalInstallCmd').textContent = s.install;
+    installBox.classList.remove('hidden');
+  } else installBox.classList.add('hidden');
+
+  // 触发词
+  const trigBox = document.getElementById('modalTriggerBox');
+  if (s.trigger) {
+    document.getElementById('modalTrigger').textContent = s.trigger;
+    trigBox.classList.remove('hidden');
+  } else trigBox.classList.add('hidden');
+
+  // 标签
+  const tagBox = document.getElementById('modalTagsBox');
+  if (s.tags?.length) {
+    document.getElementById('modalTags').innerHTML =
+      s.tags.map(t => `<span class="tag-chip">${t}</span>`).join('');
+    tagBox.classList.remove('hidden');
+  } else tagBox.classList.add('hidden');
+
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modal').classList.add('flex');
+}
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+  document.getElementById('modal').classList.remove('flex');
+}
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target.id === 'modal') closeModal();
+});
+
+// ============ 使用统计（本地记忆 v1） ============
+// 数据结构：{ [skillId]: { count: N, lastAt: ISO } }
+const STATS_KEY = 'hr-skill-hub.usageStats.v1';
+
+function getStats() {
+  try { return JSON.parse(localStorage.getItem(STATS_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveStats(s) { localStorage.setItem(STATS_KEY, JSON.stringify(s)); }
+
+function recordUsage(skillId, action = 'copy') {
+  const stats = getStats();
+  if (!stats[skillId]) stats[skillId] = { count: 0, lastAt: null };
+  stats[skillId].count += 1;
+  stats[skillId].lastAt = new Date().toISOString();
+  saveStats(stats);
+  renderTrending();
+  // ⏳ TODO（Phase 2）：团队级统计 → 把 usage 推到后端
+  pushUsageToServer(skillId, action).catch(() => {});
+}
+
+function clearStats() {
+  if (!confirm('确定清空本地的复制统计？此操作不可恢复。')) return;
+  localStorage.removeItem(STATS_KEY);
+  renderTrending();
+  showToast('🧹 已清空本地统计');
+}
+
+function renderTrending() {
+  const stats = getStats();
+  const entries = Object.entries(stats)
+    .map(([id, v]) => ({ id, ...v, skill: allSkills.find(s => s.id === id) }))
+    .filter(x => x.skill)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const box = document.getElementById('trendingBox');
+  if (entries.length === 0) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+
+  document.getElementById('trendingList').innerHTML = entries.map((e, i) => {
+    const medal = ['🥇','🥈','🥉','4️⃣','5️⃣'][i];
+    return `<button onclick="openModal('${e.id}')"
+              class="bg-white hover:bg-amber-100 border border-amber-200 rounded-lg px-3 py-1.5 text-xs flex items-center gap-2 transition">
+              <span>${medal}</span>
+              <span class="font-medium text-slate-800">${e.skill.name}</span>
+              <span class="badge bg-amber-100 text-amber-800">×${e.count}</span>
+            </button>`;
+  }).join('');
+}
+
+// ⏳ Phase 2 钩子：未来接团队后端只改这一处
+async function pushUsageToServer(skillId, action) {
+  // TODO: 后端接入选型（任选其一）：
+  //   1) GitHub Issues API：用 issue 标签累计计数（零成本，需 PAT）
+  //   2) Vercel KV / Cloudflare Workers KV：低成本 Serverless 计数器
+  //   3) 自建 trpc + Postgres：完整方案
+  // 当前为空操作，避免影响 GitHub Pages 静态部署
+  return;
+}
+
+// ============ 复制 ============
+function copyInstall() {
+  const txt = document.getElementById('modalInstallCmd').textContent;
+  const skillId = currentModalId;
+  navigator.clipboard.writeText(txt).then(() => {
+    showToast('✅ 已复制到剪贴板');
+    if (skillId) recordUsage(skillId, 'copy');
+  });
+}
+let currentModalId = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  setTimeout(() => t.style.opacity = '0', 1500);
+}
+
+// 事件绑定
+document.getElementById('searchInput').addEventListener('input', e => {
+  currentKeyword = e.target.value.trim();
+  render();
+});
+document.querySelectorAll('.status-filter').forEach(b => {
+  b.onclick = () => {
+    currentStatus = b.dataset.status;
+    document.querySelectorAll('.status-filter').forEach(x => x.classList.remove('ring-2', 'ring-brand-500'));
+    b.classList.add('ring-2', 'ring-brand-500');
+    render();
+  };
+});
+document.getElementById('sortByName').onclick = () => {
+  currentSort = 'name';
+  document.getElementById('sortByName').classList.add('text-brand-600', 'font-medium');
+  document.getElementById('sortByStatus').classList.remove('text-brand-600', 'font-medium');
+  render();
+};
+document.getElementById('sortByStatus').onclick = () => {
+  currentSort = 'status';
+  document.getElementById('sortByStatus').classList.add('text-brand-600', 'font-medium');
+  document.getElementById('sortByName').classList.remove('text-brand-600', 'font-medium');
+  render();
+};
+
+// 启动
+loadData();
+</script>
+
+</body>
+</html>

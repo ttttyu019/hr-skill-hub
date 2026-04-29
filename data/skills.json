@@ -1,0 +1,319 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updatedAt": "2026-04-29",
+    "maintainer": "章老师 (yvonezzhang)",
+    "description": "HR 团队专属 AI Skill Hub - 集中管理 HR 场景下的 AI 能力包"
+  },
+  "categories": [
+    { "id": "skill-tools",      "name": "Skill 工具库",     "icon": "📦", "color": "blue",    "desc": "可直接安装到 Claude/Cursor 的能力包" },
+    { "id": "ai-howto",         "name": "AI 操作指北",      "icon": "📘", "color": "indigo",  "desc": "AI 工具的使用方法、提示词技巧" },
+    { "id": "toolchain",        "name": "工具链配置",       "icon": "🔧", "color": "slate",   "desc": "环境搭建、API 配置、工具串联" },
+    { "id": "playbook",         "name": "场景实战 Playbook", "icon": "🎯", "color": "emerald", "desc": "HR 真实业务场景的端到端方案" },
+    { "id": "faq",              "name": "避坑 FAQ",         "icon": "⚠️", "color": "amber",   "desc": "踩过的坑、解决方案、注意事项" },
+    { "id": "inspiration",      "name": "灵感待探索",       "icon": "💡", "color": "rose",    "desc": "想做但还没做的、值得研究的方向" }
+  ],
+  "skills": [
+    {
+      "id": "interview-summary-formatter",
+      "name": "访谈纪要格式化",
+      "category": "skill-tools",
+      "version": "v5.1",
+      "tags": ["访谈纪要", "文化访谈", "docx", "格式化", "4T模型"],
+      "scenarios": ["文化价值观访谈", "管理者/员工访谈整理", "批量纪要生成"],
+      "summary": "把零散的访谈记录（Excel/文本/逐字稿）一键整理成统一格式的 .docx 文件。管理者 6 题、核心员工 5 题，结构完全隔离严禁串题，内置 4T 模型提示和综合观察章节。",
+      "highlights": [
+        "双 persona 强隔离：管理者题与员工题各走各路",
+        "支持单人 / 批量两种模式",
+        "保证 N 份纪要字体/字号/颜色 100% 一致"
+      ],
+      "install": "use_skill: interview-summary-formatter",
+      "trigger": "访谈纪要 / 访谈整理 / 文化访谈 / 4T 模型访谈",
+      "owner": "章老师",
+      "status": "stable"
+    },
+    {
+      "id": "employee-interview-generator",
+      "name": "员工访谈提纲生成器",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["访谈提纲", "12场景", "TPSMD", "管理评估", "IDP"],
+      "scenarios": ["入职/绩效/离职/晋升访谈", "团队诊断", "管理干部评估", "管理培养"],
+      "summary": "覆盖 12 种访谈场景的提纲生成器，支持 TPSMD 五大职位类 + L 管理职位类的职级体系。集成 4T 管理行为模型、杨三角、韦斯伯德六盒、推拉力理论、冰山模型、BEM、职业锚、OPEN 模型 8 大方法论。",
+      "highlights": [
+        "12 场景 × 6 职位类组合自动匹配",
+        "8 大专业方法论内置",
+        "支持 360 评估、IDP 输出"
+      ],
+      "install": "use_skill: employee-interview-generator",
+      "trigger": "员工访谈 / 入职访谈 / 离职访谈 / 晋升访谈 / IDP",
+      "owner": "章老师",
+      "status": "stable"
+    },
+    {
+      "id": "hr",
+      "name": "HR 综合智囊",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["招聘", "绩效", "薪酬", "员工关系", "合规"],
+      "scenarios": ["招聘 JD 撰写", "绩效改进", "员工关系处理", "终止/裁员合规"],
+      "summary": "面向创始人、管理者、HR 专业人士的完整 HR 智能系统。覆盖招聘、入职、绩效管理、薪酬、员工关系、终止、合规等全模块。",
+      "highlights": [
+        "全 HR 生命周期覆盖",
+        "适合从 0 搭建团队的创业者",
+        "可以辅助处理高敏感度场景（如裁员）"
+      ],
+      "install": "use_skill: HR",
+      "trigger": "how do I hire / 写 JD / 员工低绩效 / 怎么裁员 / 雇佣法律",
+      "owner": "Anthropic 官方",
+      "status": "stable"
+    },
+    {
+      "id": "gaming-acg-culture-analyst",
+      "name": "游戏/二次元企业文化分析",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["企业文化", "对标", "游戏公司", "二次元", "文化诊断"],
+      "scenarios": ["文化使命愿景价值观对标", "文化诊断", "文化盘点", "文化活动设计"],
+      "summary": "专门分析游戏和 ACG 公司的企业文化。覆盖米哈游、莉莉丝、叠纸、腾讯游戏、网易、库洛、西山居、点点互动、朝夕光年、沐瞳、Riot、动视暴雪、任天堂、Netflix 等。",
+      "highlights": [
+        "9 大学术文化框架（Hofstede / Schein / Denison / 郑伯埙 VOCS 等）",
+        "定期爬取官方/媒体最新文化报道",
+        "适合做行业对标和文化诊断"
+      ],
+      "install": "use_skill: gaming-acg-culture-analyst",
+      "trigger": "企业文化 / 文化对标 / 游戏公司文化 / 二次元公司文化",
+      "owner": "章老师定制",
+      "status": "stable"
+    },
+    {
+      "id": "anyone-to-skill",
+      "name": "人物蒸馏 / 人物对话",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["人物模拟", "认知操作系统", "蒸馏"],
+      "scenarios": ["用名人视角分析问题", "把材料蒸馏成新 skill"],
+      "summary": "两种模式：① 直接对话名人视角（马斯克/乔布斯/孔子）；② 把上传的材料蒸馏成一个新人物的 SKILL.md。",
+      "highlights": [
+        "无需 Python 环境即可激活人物视角",
+        "可从视频/文件提取思维模式生成 skill"
+      ],
+      "install": "use_skill: anyone-to-skill",
+      "trigger": "和XX对话 / 用XX的视角 / 造skill / 蒸馏",
+      "owner": "社区",
+      "status": "stable"
+    },
+    {
+      "id": "ai-efficiency-pick",
+      "name": "AI 提效精选",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["AI 周报", "工具推荐", "GitHub Trending"],
+      "scenarios": ["每周 AI 工具速览", "AI 大事件追踪"],
+      "summary": "聚合 X / GitHub Trending / Hacker News / Product Hunt 等多平台数据，按个人画像精选 AI 工具、Tricks、热门项目、大事件四大板块。",
+      "highlights": [
+        "首次使用建画像，后续个性化推荐",
+        "4 大板块结构化输出"
+      ],
+      "install": "use_skill: ai-efficiency-pick",
+      "trigger": "AI 精选 / AI 周报 / 有什么好用的 AI 工具",
+      "owner": "社区",
+      "status": "stable"
+    },
+    {
+      "id": "humanizer",
+      "name": "去 AI 味润色器",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["文本润色", "去 AI 痕迹", "写作"],
+      "scenarios": ["对外汇报材料润色", "访谈纪要去模板感", "公众号/周报"],
+      "summary": "基于维基百科 \"Signs of AI writing\" 指南，识别并消除 AI 生成文本的 30+ 种典型特征（破折号滥用、Rule of Three、虚假平行、空洞动名词分析等）。",
+      "highlights": [
+        "识别 30+ AI 写作信号",
+        "适合给对外材料做最后一道润色"
+      ],
+      "install": "use_skill: Humanizer",
+      "trigger": "去 AI 味 / 润色 / 让文字更像人写的",
+      "owner": "Anthropic 官方",
+      "status": "stable"
+    },
+    {
+      "id": "skill-creator",
+      "name": "Skill 制作工具",
+      "category": "skill-tools",
+      "version": "v1.0",
+      "tags": ["元工具", "创建 skill"],
+      "scenarios": ["把自己的工作流封装成 skill", "更新已有 skill"],
+      "summary": "官方推荐的 skill 创建/更新引导工具。创建新 skill 时第一个加载它，按规范产出。",
+      "highlights": [
+        "官方规范保证 skill 质量",
+        "适合做内部 skill 标准化"
+      ],
+      "install": "use_skill: skill-creator",
+      "trigger": "创建新 skill / 把这个工作流做成 skill",
+      "owner": "Anthropic 官方",
+      "status": "stable"
+    },
+
+    {
+      "id": "howto-prompt-structure",
+      "name": "HR 场景提示词的 5 段式结构",
+      "category": "ai-howto",
+      "tags": ["提示词", "结构化"],
+      "summary": "角色 + 背景 + 任务 + 约束 + 输出格式 五段式，HR 场景下尤其重要：必须明确 \"对象职级\"、\"敏感度等级\"、\"输出载体\"。",
+      "highlights": ["附 3 个 HR 场景示例（绩效面谈/离职沟通/IDP）"],
+      "owner": "章老师沉淀",
+      "status": "draft"
+    },
+    {
+      "id": "howto-confirm-style-first",
+      "name": "「先样例后规模」工作心法",
+      "category": "ai-howto",
+      "tags": ["心法", "工作流"],
+      "summary": "做任何批量任务前，先在 1-2 个样本上确认风格 → 用户拍板 → 再规模复制。避免做完 50 份才发现方向偏了。",
+      "highlights": ["这是章老师本人的核心工作流", "适合所有 AI 协作场景"],
+      "owner": "章老师沉淀",
+      "status": "stable"
+    },
+    {
+      "id": "howto-question-answer",
+      "name": "用 question_answer 格式做对齐",
+      "category": "ai-howto",
+      "tags": ["对齐", "决策"],
+      "summary": "和 AI 协作时，用结构化选择题代替开放式描述。配合 \"Q1 ok + lite\" 这种短反馈，决策效率提升 3x。",
+      "owner": "章老师沉淀",
+      "status": "stable"
+    },
+
+    {
+      "id": "toolchain-claude-code-setup",
+      "name": "Claude Code 环境配置",
+      "category": "toolchain",
+      "tags": ["Claude Code", "环境"],
+      "summary": "Windows 下 Claude Code + skill 加载的完整配置步骤，含 ~/.workbuddy/skills 目录约定、自动激活规则。",
+      "owner": "章老师沉淀",
+      "status": "draft"
+    },
+    {
+      "id": "toolchain-tencent-doc-mcp",
+      "name": "腾讯文档 MCP 接入",
+      "category": "toolchain",
+      "tags": ["腾讯文档", "MCP"],
+      "summary": "腾讯文档 MCP 工具接入流程，可在对话中直接创建/编辑/导出文档，含 README 索引方案。",
+      "owner": "章老师沉淀",
+      "status": "stable"
+    },
+    {
+      "id": "toolchain-github-pages",
+      "name": "GitHub Pages 部署 HR 工具",
+      "category": "toolchain",
+      "tags": ["GitHub", "部署"],
+      "summary": "把 staffing.html / leave-calc / skill-hub 等静态 HR 工具部署到 GitHub Pages，含 yvonezzhang/ttttyu019 账号下的标准操作流程。",
+      "owner": "章老师沉淀",
+      "status": "draft"
+    },
+
+    {
+      "id": "playbook-departure-interview",
+      "name": "离职访谈端到端方案",
+      "category": "playbook",
+      "tags": ["离职访谈", "全流程"],
+      "scenarios": ["离职面谈 → 纪要 → 原因归因 → 改进建议"],
+      "summary": "从员工提交离职 → 生成访谈提纲 → 1on1 面谈 → 纪要整理 → 原因归因 → 季度趋势分析的完整 SOP。配套工具：employee-interview-generator + interview-summary-formatter + 离职原因分类。",
+      "owner": "章老师沉淀",
+      "status": "draft"
+    },
+    {
+      "id": "playbook-art-vfx-interview",
+      "name": "美术/特效岗位访谈提纲",
+      "category": "playbook",
+      "tags": ["美术", "特效", "访谈"],
+      "summary": "针对游戏美术/特效岗位的离职访谈提纲，覆盖技术成长瓶颈、项目协作、工具链满意度、行业流向预判。",
+      "owner": "章老师沉淀",
+      "status": "wip"
+    },
+    {
+      "id": "playbook-staffing-mgmt",
+      "name": "编制管理 v8.0 操作手册",
+      "category": "playbook",
+      "tags": ["编制", "staffing", "v8"],
+      "summary": "staffing.html v8.0 的功能使用说明：offer 录入、JD 备选看板、6 色饼图、季度滚动盘点。配套引擎组（黑猫）/服务端（左曾→杰夫）/客户端的指标分配规则。",
+      "owner": "章老师沉淀",
+      "status": "wip"
+    },
+    {
+      "id": "playbook-culture-diagnosis",
+      "name": "文化诊断完整 SOP",
+      "category": "playbook",
+      "tags": ["文化诊断", "对标"],
+      "summary": "从文化对标（gaming-acg-culture-analyst）→ 内部访谈（employee-interview-generator）→ 纪要整理（interview-summary-formatter）→ 文化活动设计的端到端流程。",
+      "owner": "章老师沉淀",
+      "status": "draft"
+    },
+
+    {
+      "id": "faq-skill-not-trigger",
+      "name": "Skill 没有自动触发怎么办？",
+      "category": "faq",
+      "tags": ["skill", "触发"],
+      "summary": "检查 SKILL.md 的 description 关键词、所在目录（user/manager/plugin）、是否被同名 skill 遮蔽。可用 skill-conflict-detector 排查。",
+      "owner": "章老师踩坑",
+      "status": "stable"
+    },
+    {
+      "id": "faq-tencent-doc-quote",
+      "name": "腾讯文档中英文引号坑",
+      "category": "faq",
+      "tags": ["腾讯文档", "引号"],
+      "summary": "用 doc.replace_text 时，原文是中文引号，old_str 必须用中文引号；半角双引号会替换失败。",
+      "owner": "章老师踩坑",
+      "status": "stable"
+    },
+    {
+      "id": "faq-leave-calc-end-date",
+      "name": "离职结算：结束日期早于交接日期",
+      "category": "faq",
+      "tags": ["leave-calc", "v1.5.1"],
+      "summary": "所有结束日期早于交接日期的假期记录应标记为无效，不计入结算。已在 v1.5.1 修复。",
+      "owner": "章老师踩坑",
+      "status": "stable"
+    },
+
+    {
+      "id": "inspiration-resume-jd-match",
+      "name": "简历 × JD 匹配度打分",
+      "category": "inspiration",
+      "tags": ["招聘", "ML"],
+      "summary": "用 embedding + LLM 给候选人简历和 JD 打匹配度分数，输出强弱项分析。需要 Phase 3 的小模型微调能力。",
+      "owner": "想做",
+      "status": "idea"
+    },
+    {
+      "id": "inspiration-departure-prediction",
+      "name": "离职倾向预测",
+      "category": "inspiration",
+      "tags": ["员工分析", "ML"],
+      "summary": "基于绩效轨迹、调薪频率、加班数据、部门变动等特征预测员工离职倾向。需要打通数据源 + 隐私合规审查。",
+      "owner": "想做",
+      "status": "idea"
+    },
+    {
+      "id": "inspiration-1on1-realtime-coach",
+      "name": "1on1 实时教练",
+      "category": "inspiration",
+      "tags": ["管理培养", "实时"],
+      "summary": "管理者做 1on1 时，AI 实时听取并给出追问建议、引导方向、注意点。",
+      "owner": "想做",
+      "status": "idea"
+    },
+    {
+      "id": "inspiration-culture-pulse",
+      "name": "文化脉搏监测",
+      "category": "inspiration",
+      "tags": ["文化", "持续"],
+      "summary": "通过周期性轻量调研 + 内部社交数据，输出团队文化健康度仪表盘。",
+      "owner": "想做",
+      "status": "idea"
+    }
+  ]
+}
